@@ -6,7 +6,16 @@ class ContenedorCart {
   constructor() {
     const schema = new mongoose.Schema(
       {
-        productos: [mongoose.Types.Mixed]
+        productos: [{
+          _id:mongoose.Types.ObjectId,
+          nombre:String,
+          descripcion:String,
+          codigo:String,
+          descuento: {type:String, default: 0},
+          img: String,
+          precio: Number,
+          cantidad: {type:Number, default:1}
+        }]
       },
       {timestamps: true})
       //modelo: representaciön en js
@@ -19,8 +28,7 @@ class ContenedorCart {
       const carritos = JSON.parse(raw);
       let i=0
       for(const c of carritos){
-        console.log(c)
-        await this.model.create(c)
+        this.save(c)
         i++
       }
 
@@ -33,6 +41,7 @@ class ContenedorCart {
 
   async save(new_object) {
     try {
+      if(!new_object.productos.cantidad){new_object.productos.cantidad = 1}
       const carrito = await this.model.create(new_object)
       console.log('-----')
       console.log(JSON.stringify(carrito, null, 2))
@@ -54,7 +63,6 @@ class ContenedorCart {
       }else{
         carritos = await this.model.find(find)
       }
-      console.log(`No. de productos: ${carritos.length}`)
       
       return carritos.map((p)=>{
         return {
@@ -112,6 +120,7 @@ class ContenedorCart {
 
   async saveProdByIdCart(id, new_product) {
     try {
+      if(!new_product.cantidad){new_product.cantidad = 1}
       const carrito = await this.model.updateOne(
         {_id:id},
         {$push: {productos: new_product}}
@@ -126,11 +135,13 @@ class ContenedorCart {
 
   async deleteProductById(id, idProduct) {
     try {
-      const borrado = await this.model.deleteOne({_id: id, "productos._id":idProduct})
-
+      const borrado = await this.model.updateMany(
+        {_id:id},
+        {$pull: {productos: {_id:idProduct}}}
+      )
       return borrado
     } catch (e) {
-      console.log(e);
+      console.log(`Rrror borrando producto por id ${e}`);
     }
   }
 

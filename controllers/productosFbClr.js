@@ -1,9 +1,11 @@
-const prodModel = require("../models/products");
+const prodModelFb = require('../models/productsFirebase')
+
 
 module.exports = {
   loadData: async (req, res) => {
     try {
-      const productos = await prodModel.loadData("../database/data.json");
+      const productos = await prodModelFb.loadData("../database/data.json");
+
       res.status(200).send(`No. productos registrados: ${productos}`);
       console.log(`Productos cargados desde json ${productos}`);
     } catch (e) {
@@ -14,7 +16,7 @@ module.exports = {
   get: async (req, res) => {
     const { oBy, s } = req.query;
     try {
-      const allProducts = await prodModel.getAll(oBy, s);
+      const allProducts = await prodModelFb.getAll(oBy, s);
       res.status(200).send(allProducts);
     } catch (e) {
       res.status(400).send("Error obteniendo productos");
@@ -24,9 +26,9 @@ module.exports = {
   getById: async (req, res) => {
     const { id } = req.params;
     try {
-      const producto = await prodModel.getById(id);
+      const producto = await prodModelFb.getById(id);
       res.status(200).send(producto);
-      console.log(`Producto encontrado por Id: ${producto}`)
+      console.log(`Producto encontrado por Id: ${JSON.stringify(producto)}`)
     } catch (e) {
       res.status(400).send("Error encontrando producto por Id");
       console.log(`Error obteniendo producto por Id: ${e}`);
@@ -36,7 +38,7 @@ module.exports = {
     const { nombre, precio, img, stock, descripcion, codigo, descuento } = req.body;
     const new_product = { nombre, precio, img, stock, descripcion, codigo, descuento };
     try {
-      const product = await prodModel.save(new_product);
+      const product = await prodModelFb.save(new_product);
       if (product.nombre) {
         res.status(201).send(`Nuevo producto: ${product.nombre}, código ${product.codigo}`);
       }
@@ -56,11 +58,8 @@ module.exports = {
     const { nombre, precio, img, stock, descripcion, codigo, descuento } = req.body;
     const new_product = { nombre, precio, img, stock, descripcion, codigo, descuento};
     try {
-      const producto = await prodModel.editById(id, new_product);
-      res.status(200).send({
-        "Productos encontrados": producto.matchedCount,
-        "Productos modificados": producto.modifiedCount,
-      });
+      const producto = await prodModelFb.editById(id, new_product);
+      res.status(200).send(producto);
       console.log(`Producto encontrado por ID: ${JSON.stringify(producto)}`)
     } catch (e) {
       res.status(400).send("Error editando producto");
@@ -70,9 +69,9 @@ module.exports = {
   deleteById: async (req, res) => {
     const { id } = req.params;
     try {
-      const borrado = await prodModel.deleteById(id);
+      const borrado = await prodModelFb.deleteById(id);
       res.status(200).send(`Un producto borrado`);
-      console.log(`Un producto borrado: ${borrado}`)
+      console.log(`Un producto borrado: ${JSON.stringify(borrado)}`)
     } catch (e) {
       res.status(400).send("Error borrando producto");
       console.log(`Error borrando producto: ${e}`);
@@ -80,9 +79,9 @@ module.exports = {
   },
   deleteAll: async (req, res) => {
     try {
-      const borrado = await prodModel.deleteAll();
-      res.status(200).send(`No. productos borrados: ${borrado.deletedCount}`);
-      console.log(`Productos borrados ${borrado}`);
+      const borrado = await prodModelFb.deleteAll();
+      res.status(200).send(borrado);
+      console.log(`Productos borrados ${JSON.stringify(borrado)}`);
     } catch (e) {
       res.status(400).send("Error borrando productos");
       console.log(`Error borrando productos: ${e}`);

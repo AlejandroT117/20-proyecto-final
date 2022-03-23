@@ -12,8 +12,7 @@ class Contenedor{
       codigo: { type: String, unique:true, required: [true, 'Se requiere codigo']},
       img: String,
       precio: Number,
-      stock: {type:Number, default:0},
-      timestamps: String
+      stock: {type:Number, default:0}
       },
       {timestamps: true})
 
