@@ -1,34 +1,31 @@
-const moment = require("moment");
+const mongoose = require('mongoose')
 const fs = require("fs").promises;
+const path = require('path')
 
 class ContenedorCart {
   constructor() {
-
+    const schema = new mongoose.Schema(
+      {
+        productos: [mongoose.Types.Mixed]
+      },
+      {timestamps: true})
+      //modelo: representaciön en js
+      this.model = mongoose.model('cart', schema)
   }
 
-  async create() {
+  async loadData(filename){
     try {
-      let last_id = 0;
-      const raw = await fs.readFile(this.filename, "utf-8");
-      const data = JSON.parse(raw);
-
-      if (data) {
-        for (let i = 0; i < data.length; i++) {
-          const producto = data[i];
-          last_id = producto.id;
-        }
+      const raw = await fs.readFile(path.join(__dirname, filename), "utf-8");
+      const carritos = JSON.parse(raw);
+      let i=0
+      for(const c of carritos){
+        console.log(c)
+        await this.model.create(c)
+        i++
       }
 
-      this.next_id = last_id + 1;
-
-      data.push({
-        id: this.next_id,
-        timestamp: moment().format("DD:mm:yy HH:mm:ss"),
-        productos: [],
-      });
-      await fs.writeFile(this.filename, JSON.stringify(data, null, 2), "utf-8");
-
-      return this.next_id;
+      console.log('data cargada en db')
+      return i
     } catch (e) {
       console.log(e);
     }
@@ -36,169 +33,94 @@ class ContenedorCart {
 
   async save(new_object) {
     try {
-      let last_id = 0;
-      const raw = await fs.readFile(this.filename, "utf-8");
-      const data = JSON.parse(raw);
+      const carrito = await this.model.create(new_object)
+      console.log('-----')
+      console.log(JSON.stringify(carrito, null, 2))
 
-      if (data) {
-        for (let i = 0; i < data.length; i++) {
-          const producto = data[i];
-          last_id = producto.id;
-        }
-      }
-
-      this.next_id = last_id + 1;
-
-      new_object.id = this.next_id;
-
-      data.push({
-        id: new_object.id,
-        nombre: new_object.nombre,
-        precio: new_object.precio,
-        img: new_object.img,
-        stock: new_object.stock,
-        timestamp: moment().format("DD:mm:yy HH:mm:ss"),
-        descripcion: new_object.descripcion,
-        código: new_object.código,
-      });
-
-      await fs.writeFile(this.filename, JSON.stringify(data, null, 2), "utf-8");
-
-      return new_object;
+      return carrito
     } catch (e) {
-      console.log(e);
+      console.log(`Error creando carrito ${e}`);
     }
   }
 
   async getById(id) {
     try {
-      const raw = await fs.readFile(this.filename, "utf-8");
-      const data = JSON.parse(raw);
-
-      const obj = data.find((obj) => obj.id === id);
-
-      if (!obj) {
+      const carrito = await this.model.find({_id:id})
+      if (!carrito) {
         return null;
       }
 
-      return obj;
+      return carrito[0];
     } catch (e) {
-      console.log(e);
+      console.log(`Error en get by id: ${e}`)
     }
   }
 
   async getProductsByIdCart(id){
     try {
-      const raw = await fs.readFile(this.filename, "utf-8");
-      const data = JSON.parse(raw);
-
-      const obj = data.find((obj) => obj.id === id);
-
-      if (!obj) {
+      const carrito = await this.model.find({_id:id})
+      if (!carrito) {
         return null;
       }
 
-      return obj.productos;
+      return carrito[0].productos;
+    } catch (e) {
+      console.log(`Error en get productos by id: ${e}`)
+    }
+  }
+
+  async saveProdByIdCart(id, new_product) {
+    try {
+      const carrito = await this.model.updateOne(
+        {_id:id},
+        {$push: {productos: new_product}}
+      )
+
+      return carrito
     } catch (e) {
       console.log(e);
     }
   }
 
-  async saveProdByIdCart(id, new_object) {
-    try {
-      const raw = await fs.readFile(this.filename, "utf-8");
-      const data = JSON.parse(raw);
-
-      const obj = data.find((obj) => obj.id === id);
-
-      if (!obj) {
-        return null;
+  async getAll(orderBy='', search='') {
+    try{
+      let carritos = []
+      let find = search ? {nombre: {$regex: search, $options:'i'}}: {}
+      if(orderBy){
+        const SORT = {}
+        SORT[orderBy]=1
+        carritos = await this.model.find(find).sort(SORT)
+      }else{
+        carritos = await this.model.find(find)
       }
+      console.log(`No. de productos: ${carritos.length}`)
       
-      data.map((cart) => {
-        
-        if (cart.id === id) {
-          let last_id = 0;
-          for (let i = 0; i < cart.productos.length; i++) {
-            const producto = cart.productos[i];
-            last_id = producto.id;
-          }
-          const id_product = last_id? last_id+1: 1
-
-          cart.productos.push({
-            id: id_product,
-            nombre: new_object.nombre,
-            precio: new_object.precio,
-            img: new_object.img,
-            stock: new_object.stock,
-            timestamp: moment().format("DD:mm:yy HH:mm:ss"),
-            descripcion: new_object.descripcion,
-            código: new_object.código,
-          })
-
-          return cart;
+      return carritos.map((p)=>{
+        return {
+          id: p['_id'],
+          productos: p.productos,
         }
-      });
-
-      await fs.writeFile(this.filename, JSON.stringify(data, null, 2), "utf-8");
-
-      return new_object;
-
+      })
     } catch (e) {
-      console.log(e);
-    }
-  }
-
-  async getAll() {
-    try {
-      const raw = await fs.readFile(this.filename, "utf-8");
-      const data = JSON.parse(raw);
-
-      return data;
-    } catch (e) {
-      console.log(e);
+      console.log(`Error en get all ${e}`)
     }
   }
 
   async deleteById(id) {
     try {
-      const raw = await fs.readFile(this.filename, "utf-8");
-      const data = JSON.parse(raw);
-
-      const filtered_data = data.filter((obj) => obj.id !== id);
-
-      await fs.writeFile(
-        this.filename,
-        JSON.stringify(filtered_data, null, 2),
-        "utf-8"
-      );
+      const borrado = await this.model.deleteOne({_id: id})
+      return borrado
     } catch (e) {
-      console.log(e);
+      console.log(`Error en borrado por id ${e}`)
     }
   }
   
 
   async deleteProductById(id, idProduct) {
     try {
-      const raw = await fs.readFile(this.filename, "utf-8");
-      const data = JSON.parse(raw);
+      const borrado = await this.model.deleteOne({_id: id, "productos._id":idProduct})
 
-      const selectedCart = data.find((obj) => obj.id === id);
-
-      const filtered_data = selectedCart.productos.filter((obj) => obj.id !== idProduct);
-
-      selectedCart.productos = filtered_data
-
-      const unselectedCart = data.find((obj) => obj.id !== id);
-
-      /* Líneas confusas, corregir */
-      const filedata = unselectedCart? [selectedCart, unselectedCart]: [selectedCart]
-
-      await fs.writeFile(
-        this.filename,
-        JSON.stringify(filedata, null, 2),
-        "utf-8"
-      );
+      return borrado
     } catch (e) {
       console.log(e);
     }
@@ -206,9 +128,10 @@ class ContenedorCart {
 
   async deleteAll() {
     try {
-      await fs.writeFile(this.filename, JSON.stringify([], null, 2), "utf-8");
+      const carrito = await this.model.deleteMany({})
+      return carrito
     } catch (e) {
-      console.log(e);
+      console.log(`Error borrando todos los carritos ${e}`)
     }
   }
 }

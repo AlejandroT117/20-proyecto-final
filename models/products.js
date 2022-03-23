@@ -12,12 +12,31 @@ class Contenedor{
       codigo: { type: String, unique:true, required: [true, 'Se requiere codigo']},
       img: String,
       precio: Number,
-      stock: {type:Number, default:0}
+      stock: {type:Number, default:0},
+      timestamps: String
       },
       {timestamps: true})
 
     //modelo: representaciön en js
     this.model = mongoose.model('product', schema)
+  }
+
+  async loadData(filename){
+    try{
+      const raw = await fs.readFile(path.join(__dirname, filename), 'utf-8')
+      const productos = JSON.parse(raw)
+      let i=0
+      for(const p of productos){
+        console.log(p)
+        await this.model.create(p)
+        i++
+      }
+  
+      console.log('data cargada en db')
+      return i
+    }catch(e){
+      console.log(`Error cargando datos: ${e}`)
+    }
   }
 
   async save(new_object){
@@ -45,24 +64,6 @@ class Contenedor{
       return producto[0]
     }catch(e){
       console.log(`Error en get by id: ${e}`)
-    }
-  }
-
-  async loadData(filename){
-    try{
-      const raw = await fs.readFile(path.join(__dirname, filename), 'utf-8')
-      const productos = JSON.parse(raw)
-      let i=0
-      for(const p of productos){
-        console.log(p)
-        await this.model.create(p)
-        i++
-      }
-  
-      console.log('data cargada a db')
-      return i
-    }catch(e){
-      console.log(`Error cargando datos: ${e}`)
     }
   }
 
@@ -105,27 +106,25 @@ class Contenedor{
         }
       })
     }catch(e){
-      console.log(e)
+      console.log(`Error en get all ${e}`)
     }
   }
 
   async deleteById(id){
     try{
-      console.log('Borrando por id')
-      const borrado = await this.model.deleteMany({_id: id})
+      const borrado = await this.model.deleteOne({_id: id})
       return borrado
     }catch(e){  
-      console.log(e)
+      console.log(`Error en borrado por id ${e}`)
     }
   }
 
   async deleteAll(){
     try{
-      console.log(`Borrando todos los productos...`)
       const producto = await this.model.deleteMany({})
       return producto
     }catch(e){
-      console.log(e)
+      console.log(`Error borrando todos los productos ${e}`)
     }
   }
 
