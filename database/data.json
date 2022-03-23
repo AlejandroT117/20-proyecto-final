@@ -1,0 +1,119 @@
+[
+  {
+    "codigo": "001",
+    "nombre": "Control XBOX",
+    "precio": "1499",
+    "img": "https://m.media-amazon.com/images/I/71WX6wVepIL._AC_SX466_.jpg",
+    "stock": 40,
+    "timestamp": "2/03/2022 00:30:30",
+    "descripcion": "Lorem ipsum"
+  },
+  {
+    "codigo": "002",
+    "nombre": "Televisión 55",
+    "precio": "13999",
+    "img": "https://m.media-amazon.com/images/I/61zlEVWvQzL._AC_SY355_.jpg",
+    "stock": 20,
+    "timestamp": "2/03/2022 00:30:30",
+    "descripcion": "Lorem ipsum"
+  },
+  {
+    "codigo": "003",
+    "nombre": "Ventilador para laptop",
+    "precio": "399",
+    "img": "https://m.media-amazon.com/images/I/81orVm78EkS._AC_SY355_.jpg",
+    "stock": 60,
+    "timestamp": "2/03/2022 00:30:30",
+    "descripcion": "Lorem ipsum"
+  },
+  {
+    "codigo": "004",
+    "nombre": "Laptop Surface",
+    "precio": "16999",
+    "img": "https://m.media-amazon.com/images/I/61OvV27-44L._AC_SL1500_.jpg",
+    "stock": 14,
+    "timestamp": "2/03/2022 00:30:30",
+    "descripcion": "Lorem ipsum"
+  },
+  {
+    "codigo": "005",
+    "nombre": "Bocina bluetooth",
+    "precio": "999",
+    "img": "https://m.media-amazon.com/images/I/61Ph+p48yJL._AC_SY355_.jpg",
+    "stock": 100,
+    "timestamp": "2/03/2022 00:30:30",
+    "descripcion": "Lorem ipsum"
+  },
+  {
+    "codigo": "006",
+    "nombre": "Audífonos true wireless",
+    "precio": "478",
+    "img": "https://m.media-amazon.com/images/I/51go1YZQLrL._AC_SY355_.jpg",
+    "stock": 22,
+    "timestamp": "2/03/2022 00:30:30",
+    "descripcion": "Lorem ipsum"
+  },
+  {
+    "codigo": "007",
+    "nombre": "Casco",
+    "precio": "500",
+    "img": "https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1556722010-giro-aether-mips-1556722003.jpg",
+    "stock": "45",
+    "timestamp": "2/03/2022 00:30:30",
+    "descripcion": "Lorem ipsum"
+  },
+  {
+    "codigo": "008",
+    "nombre": "Cartera",
+    "precio": "254",
+    "img": "https://m.media-amazon.com/images/I/61WMfafdhAL._AC_SL1000_.jpg",
+    "stock": "3",
+    "timestamp": "2/03/2022 00:30:30",
+    "descripcion": "Lorem ipsum"
+  },
+  {
+    "codigo": "009",
+    "nombre": "shampoo",
+    "precio": "45",
+    "img": "https://www.soriana.com/dw/image/v2/BGBD_PRD/on/demandware.static/-/Sites-soriana-grocery-master-catalog/default/dw3adaa66a/images/product/7500435114967-A.jpg?sw=1000&sh=1000&sm=fit",
+    "stock": "456",
+    "timestamp": "2/03/2022 00:30:30",
+    "descripcion": "Lorem ipsum"
+  },
+  {
+    "codigo": "0010",
+    "nombre": "Xiaomi redmi 9",
+    "precio": "4999",
+    "img": "https://http2.mlstatic.com/D_NQ_NP_830330-MLA48798662445_012022-O.jpg",
+    "stock": "5",
+    "timestamp": "2/03/2022 00:30:30",
+    "descripcion": "Lorem ipsum"
+  },
+  {
+    "codigo": "0011",
+    "nombre": "tacx neo 2t",
+    "precio": "32500",
+    "img": "https://static.garmincdn.com/en/products/T2875.60/g/cf-lg-dcdcf7d9-f287-4bdb-894d-44dc1806342b.jpg",
+    "stock": "5",
+    "timestamp": "2/03/2022 00:30:30",
+    "descripcion": "Lorem ipsum"
+  },
+  {
+    "codigo": "0012",
+    "nombre": "GOPRO 10",
+    "precio": "10000",
+    "img": "https://cdn.pocket-lint.com/r/s/1200x/assets/images/158179-cameras-news-new-gopro-hero-10-images-leaked-showing-key-specs-and-design-image1-a6sylhupve.png",
+    "stock": "10",
+    "timestamp": "2/03/2022 00:30:30",
+    "descripcion": "Lorem ipsum"
+  },
+  {
+    "codigo": "0014",
+    "nombre": "Mouse Logitech G502 HERO",
+    "precio": "1200",
+    "img": "https://m.media-amazon.com/images/I/61mpMH5TzkL._AC_SY450_.jpg",
+    "stock": "24",
+    "timestamp": "02:41:2022 01:41:49",
+    "descripcion": "Mouse alámbrico"
+  }
+]

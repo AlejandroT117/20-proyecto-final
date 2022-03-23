@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "timestamp": "02:18:2022 02:18:25",
+    "productos": [
+      {
+        "id": 2,
+        "nombre": "Mouse Logitech G502 HERO",
+        "precio": "1200",
+        "img": "https://m.media-amazon.com/images/I/61mpMH5TzkL._AC_SY450_.jpg",
+        "stock": "24",
+        "timestamp": "02:44:2022 02:44:48",
+        "descripcion": "Mouse alámbrico",
+        "código": "000NMSX1"
+      }
+    ]
+  }
+]
