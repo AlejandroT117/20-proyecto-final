@@ -1,13 +1,22 @@
 const prodModel = require("../models/products");
 
-//cambiar then catch por try catch
 module.exports = {
+  loadData: async (req, res) => {
+    try {
+      const productos = await prodModel.loadData("../database/data.json");
+      res.status(200).send(`No. productos registrados: ${productos}`);
+      console.log(`Productos cargados desde json ${productos}`);
+    } catch (e) {
+      res.status(400).send("Error cargando datos");
+      console.log(`Error cargando datos ${e}`);
+    }
+  },
   get: async (req, res) => {
     const { oBy, s } = req.query;
     try {
       const allProducts = await prodModel.getAll(oBy, s);
       res.status(200).send(allProducts);
-      console.log("Productos registrados: ");
+      console.log(`Productos registrados: ${JSON.stringify(allProducts)}`);
     } catch (e) {
       res.status(400).send("Error obteniendo productos");
       console.log(`Error en get All Products ${e}`);
@@ -65,7 +74,7 @@ module.exports = {
       res.status(200).send(`Un producto borrado`);
       console.log(`Un producto borrado: ${borrado}`)
     } catch (e) {
-      res.status(400).send("Error borando producto");
+      res.status(400).send("Error borrando producto");
       console.log(`Error borrando producto: ${e}`);
     }
   },
@@ -75,18 +84,8 @@ module.exports = {
       res.status(200).send(`No. productos borrados: ${borrado.deletedCount}`);
       console.log(`Productos borrados ${borrado}`);
     } catch (e) {
-      res.status(400).send("Error borando productos");
+      res.status(400).send("Error borrando productos");
       console.log(`Error borrando productos: ${e}`);
     }
-  },
-  loadData: async (req, res) => {
-    try {
-      const productos = await prodModel.loadData("../database/data.json");
-      res.status(200).send(`No. productos registrados: ${productos}`);
-      console.log(`Productos cargados desde json ${productos}`);
-    } catch (e) {
-      res.status(400).send("Error cargando datos");
-      console.log(`Error cargando datos ${e}`);
-    }
-  },
+  }
 };

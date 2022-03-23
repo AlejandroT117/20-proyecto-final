@@ -43,6 +43,30 @@ class ContenedorCart {
     }
   }
 
+  async getAll(orderBy='', search='') {
+    try{
+      let carritos = []
+      let find = search ? {"productos.nombre": {$regex: search, $options:'i'}}: {}
+      if(orderBy){
+        const SORT = {}
+        SORT[orderBy]=1
+        carritos = await this.model.find(find).sort(SORT)
+      }else{
+        carritos = await this.model.find(find)
+      }
+      console.log(`No. de productos: ${carritos.length}`)
+      
+      return carritos.map((p)=>{
+        return {
+          id: p['_id'],
+          productos: p.productos,
+        }
+      })
+    } catch (e) {
+      console.log(`Error en get all ${e}`)
+    }
+  }
+
   async getById(id) {
     try {
       const carrito = await this.model.find({_id:id})
@@ -53,6 +77,23 @@ class ContenedorCart {
       return carrito[0];
     } catch (e) {
       console.log(`Error en get by id: ${e}`)
+    }
+  }
+  async deleteAll() {
+    try {
+      const carrito = await this.model.deleteMany({})
+      return carrito
+    } catch (e) {
+      console.log(`Error borrando todos los carritos ${e}`)
+    }
+  }
+
+  async deleteById(id) {
+    try {
+      const borrado = await this.model.deleteOne({_id: id})
+      return borrado
+    } catch (e) {
+      console.log(`Error en borrado por id ${e}`)
     }
   }
 
@@ -81,39 +122,6 @@ class ContenedorCart {
       console.log(e);
     }
   }
-
-  async getAll(orderBy='', search='') {
-    try{
-      let carritos = []
-      let find = search ? {nombre: {$regex: search, $options:'i'}}: {}
-      if(orderBy){
-        const SORT = {}
-        SORT[orderBy]=1
-        carritos = await this.model.find(find).sort(SORT)
-      }else{
-        carritos = await this.model.find(find)
-      }
-      console.log(`No. de productos: ${carritos.length}`)
-      
-      return carritos.map((p)=>{
-        return {
-          id: p['_id'],
-          productos: p.productos,
-        }
-      })
-    } catch (e) {
-      console.log(`Error en get all ${e}`)
-    }
-  }
-
-  async deleteById(id) {
-    try {
-      const borrado = await this.model.deleteOne({_id: id})
-      return borrado
-    } catch (e) {
-      console.log(`Error en borrado por id ${e}`)
-    }
-  }
   
 
   async deleteProductById(id, idProduct) {
@@ -126,14 +134,6 @@ class ContenedorCart {
     }
   }
 
-  async deleteAll() {
-    try {
-      const carrito = await this.model.deleteMany({})
-      return carrito
-    } catch (e) {
-      console.log(`Error borrando todos los carritos ${e}`)
-    }
-  }
 }
 
-module.exports = ContenedorCart;
+module.exports = new ContenedorCart();
