@@ -54,13 +54,13 @@ class Contenedor{
 
   async getById(id){
     try{
-      const producto = await this.model.find({_id: id})
+      const producto = await this.model.findOne({_id: id})
 
       if(!producto){
         return null
       }
 
-      return producto[0]
+      return producto
     }catch(e){
       console.log(`Error en get by id: ${e}`)
     }

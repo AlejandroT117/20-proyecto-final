@@ -77,12 +77,12 @@ class ContenedorCart {
 
   async getById(id) {
     try {
-      const carrito = await this.model.find({_id:id})
+      const carrito = await this.model.findOne({_id:id})
       if (!carrito) {
         return null;
       }
 
-      return carrito[0];
+      return carrito;
     } catch (e) {
       console.log(`Error en get by id: ${e}`)
     }
@@ -107,12 +107,12 @@ class ContenedorCart {
 
   async getProductsByIdCart(id){
     try {
-      const carrito = await this.model.find({_id:id})
+      const carrito = await this.model.findOne({_id:id})
       if (!carrito) {
         return null;
       }
 
-      return carrito[0].productos;
+      return carrito.productos;
     } catch (e) {
       console.log(`Error en get productos by id: ${e}`)
     }
