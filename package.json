@@ -2,10 +2,10 @@
   "name": "ecommerce-back-end",
   "version": "1.0.0",
   "description": "PRoyecto final coderhouse backend ",
-  "main": "index.js",
+  "main": "./src/index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "node ./src/index.js",
+    "dev": "nodemon --ignore './public/*' -r dotenv/config ."
   },
   "keywords": [
     "ecommerce"
@@ -13,15 +13,25 @@
   "author": "Uriel Alejandro Trejo Martínez",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
+    "connect-mongo": "^4.6.0",
     "cookie-parser": "^1.4.6",
     "express": "^4.17.3",
+    "express-flash": "^0.0.2",
+    "express-session": "^1.17.3",
     "firebase": "^9.6.9",
     "firebase-admin": "^10.0.2",
     "moment": "^2.29.1",
     "mongoose": "^6.2.7",
-    "path": "^0.12.7"
+    "passport": "^0.5.2",
+    "passport-local": "^1.0.0",
+    "path": "^0.12.7",
+    "pug": "^3.0.2",
+    "twilio": "^3.77.0",
+    "winston": "^3.7.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "dotenv": "^16.0.1"
   }
 }
