@@ -1,21 +1,23 @@
 const mongoose = require("mongoose");
 const fs = require("fs").promises;
 const path = require("path");
+const logger = require("../log");
 
 class ContenedorCart {
   constructor() {
     const schema = new mongoose.Schema(
       {
+        userId: String,
         productos: [
           {
             _id: mongoose.Types.ObjectId,
             nombre: String,
             descripcion: String,
             codigo: String,
-            descuento: { type: String, default: 0 },
+            descuento: Number,
             img: String,
             precio: Number,
-            cantidad: { type: Number, default: 1 },
+            cantidad: Number,
           },
         ],
       },
@@ -81,14 +83,53 @@ class ContenedorCart {
       console.log(`Error en get all ${e}`);
     }
   }
+  async isInCart(idCart, new_product) {
+    try {
+      const inCart = await this.model.find(
+        { userId: idCart },
+        {
+          productos: {
+            $elemMatch: { _id: new_product.id },
+          },
+        }
+      );
+      logger.log(`Is in cart ${inCart.productos}`);
+      if (inCart.productos) {
+        return true;
+      }
+      return false;
+    } catch (e) {
+      logger.error(`Error en Is in Cart`);
+    }
+  }
 
+  async getByUserId(id) {
+    try {
+      const carrito = await this.model.findOne({ userId: id });
+      if (!carrito) {
+        return this.createVoidCart(id);
+      }
+      return carrito;
+    } catch (e) {
+      console.log(`Error en get by id: ${e}`);
+    }
+  }
+  async createVoidCart(id) {
+    try {
+      const new_cart = { userId: id };
+      const carrito = await this.model.create(new_cart);
+      logger.log(`Carrito creado`);
+      return carrito;
+    } catch (e) {
+      logger.error(`Cart not created`);
+    }
+  }
   async getById(id) {
     try {
       const carrito = await this.model.findOne({ _id: id });
       if (!carrito) {
         return null;
       }
-
       return carrito;
     } catch (e) {
       console.log(`Error en get by id: ${e}`);
@@ -127,11 +168,15 @@ class ContenedorCart {
 
   async saveProdByIdCart(id, new_product) {
     try {
+      const isInCart = await this.isInCart(id, new_product);
+      if(isInCart){
+        return //update quantity
+      }
       if (!new_product.cantidad) {
         new_product.cantidad = 1;
       }
       const carrito = await this.model.updateOne(
-        { _id: id },
+        { userId: id },
         { $push: { productos: new_product } }
       );
 
@@ -144,7 +189,7 @@ class ContenedorCart {
   async deleteProductById(id, idProduct) {
     try {
       const borrado = await this.model.updateMany(
-        { _id: id },
+        { id: id },
         { $pull: { productos: { _id: idProduct } } }
       );
       return borrado;

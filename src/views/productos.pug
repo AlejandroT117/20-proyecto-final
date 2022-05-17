@@ -4,7 +4,7 @@ block pageContent
     if productos.length > 0  
       each p in productos
         - var img = p.img
-        .column.is-3
+        .column.is-4-desktop.is-3-widescreen.is-2-fullhd
           .card
             .card-image
               figure.image.is-4by3
@@ -13,11 +13,15 @@ block pageContent
               .media
                 .media-content
                   p.title.is-4 #{p.nombre}
-                  h2.subtitle.is-6 $#{p.precio}
+                  h2.subtitle.is-6 $#{p.precio} MXN
+                  if +p.descuento > 0
+                    h2.subtitle.is-6 -#{p.descuento}%
               .content
                 | #{p.descripcion} 
                 | Stock: #{p.stock}
-                button.button.is-primary Añadir al carrito
+            .card-footer
+              button.card-footer-item.button.is-primary(onclick=`addToCart('${user.id}', '${p.id}')`)
+                | A&ntilde;adir al carrito
     else
       .column.is-3
         h2.subtitle No hay productos para mostrar

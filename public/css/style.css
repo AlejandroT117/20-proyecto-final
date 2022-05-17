@@ -17,3 +17,13 @@ nav.navbar {
   display: flex;
   flex-direction: row;
 }
+
+.headerPayment{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  padding: 0 1.5rem ;
+}
+.cart{
+  padding: 1rem;
+}

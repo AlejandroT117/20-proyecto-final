@@ -16,7 +16,7 @@ const initializePassport = require('./passport/local')
 const pugEngine = require('./engine')
 const logger = require('./log')
 
-const { HOSTNAME, SCHEMA, DATABASE, USER, PASSWORD, OPTIONS  } = require("./config");
+const { HOSTNAME, SCHEMA, DATABASE, USER, PASSWORD, OPTIONS  } = require("./config").mongoConfig;
 
 const homeRouter = require("./routes/home");
 const loginRouter = require("./routes/login");
@@ -58,7 +58,7 @@ const MONGO_URI = process.env.NODE_ENV === 'production' ?
       session({
         store: MongoStore.create({
           mongoUrl:MONGO_URI,
-          ttl: 10*60, //10 minutos para expiración
+          ttl: 20*60, //10 minutos para expiración
           autoRemove: "native"
         }),
 

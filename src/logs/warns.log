@@ -1,0 +1,21 @@
+05-16-2022 19:48:49- error: Cart not created
+05-16-2022 19:52:03- error: Cart not created
+05-16-2022 19:53:46- error: Cart not created
+05-16-2022 19:54:07- error: Cart not created
+05-16-2022 19:55:19- error: Cart not created
+05-16-2022 19:55:42- error: Cart not created
+05-16-2022 22:01:01- error: Cart not created
+05-16-2022 22:01:33- error: Cart not created
+05-16-2022 22:02:56- error: Cart not created
+05-16-2022 22:03:12- error: Cart not created
+05-16-2022 22:03:18- error: Cart not created
+05-16-2022 22:05:31- error: Error en Is in Cart
+05-16-2022 22:05:58- error: Error en Is in Cart
+05-16-2022 22:06:34- error: Error en Is in Cart
+05-16-2022 22:06:35- error: Error en Is in Cart
+05-16-2022 22:06:38- error: Error en Is in Cart
+05-16-2022 22:34:47- error: Error en Is in Cart
+05-16-2022 22:35:54- error: Error en Is in Cart
+05-16-2022 23:47:32- warn: Borrando producto: {"acknowledged":true,"modifiedCount":1,"upsertedId":null,"upsertedCount":0,"matchedCount":1}
+05-16-2022 23:50:12- warn: Borrando producto: {"acknowledged":true,"modifiedCount":1,"upsertedId":null,"upsertedCount":0,"matchedCount":1}
+05-16-2022 23:50:36- warn: Borrando producto: {"acknowledged":true,"modifiedCount":1,"upsertedId":null,"upsertedCount":0,"matchedCount":1}

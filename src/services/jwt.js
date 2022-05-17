@@ -4,7 +4,7 @@ const SECRET = process.env.SECRET;
 module.exports = {
   generateToken: (user) => {
     return jwt.sign(user, SECRET, {
-      expiresIn: "900s",
+      expiresIn: "1200s",
     });
   },
 

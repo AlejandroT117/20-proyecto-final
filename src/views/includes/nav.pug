@@ -24,10 +24,14 @@ nav.navbar
         if user
           a.navbar-item.is-size-5.has-text-weight-semibold(href='/logout')
             |#{user.firstname} | Logout
+          a.navbar-item.is-size-5.has-text-weight-semibold(href='/config')
+            i.fa-solid.fa-cog
         else
           a.navbar-item.is-size-5.has-text-weight-semibold(href='/login')
             | Login
-        a.navbar-item.is-size-5.has-text-weight-semibold
+        a.navbar-item.is-size-5.has-text-weight-semibold(href="/cart")
           i.fa-solid.fa-cart-shopping
+          if cartById
+            #cartNumber #{cartById.productos.length}
 
         

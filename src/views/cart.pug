@@ -1,0 +1,33 @@
+extends layouts/page.pug 
+block pageContent
+  h2.subtitle Tu carrito
+  if cartById.productos.length
+    div.headerPayment
+      h1.title Total: $#{total} MXN
+      button.button.is-primary Pagar
+    div.cart
+      each p in cartById.productos
+        - var img = p.img
+        .box(id= `${p.id}`)
+          article.media
+            .media-left
+              figure.image.is-64x64
+                img(src=img)
+            .media-content
+              .content
+                p
+                  strong #{p.nombre} 
+                  small #{p.descripcion}
+                  br
+                  strong $ #{p.precio} MXN 
+                  small x #{p.cantidad}
+              nav.level.is-mobile
+                .level-left
+                  a.level-item(aria-label='reply' onclick=`deleteFromCart('${user.id}', '${p.id}')`)
+                    span.icon.is-small
+                      i.fas.fa-trash(aria-hidden='true')
+                  a.level-item(aria-label='retweet')
+                    span.icon.is-small
+                      i.fas.fa-pencil(aria-hidden='true')
+  else
+    p.is-6 Está vacio

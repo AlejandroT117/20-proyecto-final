@@ -24,10 +24,10 @@ module.exports = {
   },
   getById: async (req, res) => {
     const { id } = req.params;
+    logger.log(`Producto con Id: ${id}`)
     try {
       const producto = await prodModel.getById(id);
       res.status(200).send(producto);
-      logger.log(`Producto encontrado por Id: ${producto}`)
     } catch (e) {
       res.status(400).send("Error encontrando producto por Id");
       logger.error(`Error obteniendo producto por Id: ${e}`);
