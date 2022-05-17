@@ -36,12 +36,12 @@ const logger = winston.createLogger({
       format: combine(myFormat),
     }),
     new winston.transports.File({
-      filename: "./logs/warns.log",
+      filename: "./src/logs/warns.log",
       level: "warn",
       format: combine(fileFormat)
     }),
     new winston.transports.File({
-      filename: "./logs/error.log",
+      filename: "./src/logs/error.log",
       level: "error",
       format: combine(fileFormat)
     }),

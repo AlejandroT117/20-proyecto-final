@@ -1,0 +1,19 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito&display=swap");
+body {
+  font-family: "Nunito", sans-serif;
+}
+nav.navbar {
+  height: 6rem !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06) !important;
+}
+
+.image img{
+  height: auto !important;
+}
+.card-image img{
+  aspect-ratio: 4 / 3 !important; 
+}
+.searchForm{
+  display: flex;
+  flex-direction: row;
+}

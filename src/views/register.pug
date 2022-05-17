@@ -1,0 +1,32 @@
+extends layouts/page.pug 
+block pageContent
+  section.hero
+    .hero-body.has-text-centered
+      .container
+        .columns
+          .column.is-6.is-offset-3
+            .login
+              h2.subtitle.is-4 Crea una nueva cuenta
+              if messages.error
+                include includes/form_errors.pug
+              form(action='/register' method='post')
+                .field
+                  .control
+                    input.input.is-medium.is-rounded(type='text' placeholder='Tu(s) nombre(s)' autocomplete='firstname' required='' name='firstname')
+                .field
+                  .control
+                    input.input.is-medium.is-rounded(type='text' placeholder='Tu(s) apellido(s)' autocomplete='lastname' required='' name='lastname')
+                .field
+                  .control
+                    input.input.is-medium.is-rounded(type='email' placeholder='Tu email' autocomplete='username' required='' name='email')
+                .field
+                  .control
+                    input.input.is-medium.is-rounded(type='password' placeholder='Tu contraseña' autocomplete='current-password' required='' name='pwd')
+                br
+                button.button.is-block.is-fullwidth.is-primary.is-medium.is-rounded(type='submit')
+                  | Crear
+              br
+              nav.level
+                .level-item.has-text-centered
+                  div
+              a(href='/login') Ya tengo cuenta 

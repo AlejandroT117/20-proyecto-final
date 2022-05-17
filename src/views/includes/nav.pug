@@ -1,0 +1,33 @@
+nav.navbar
+  .container
+    .navbar-brand
+      a.navbar-item(href='#')
+        img(src='/static/img/logo.png' alt='Logo') 
+      span.navbar-burger.burger(data-target='navbarMenu')
+        span
+        span
+        span
+    #navbarMenu.navbar-menu
+      .navbar-end
+        .navbar-item
+          form.searchForm(action="/productos", method="get") 
+            .control.has-icons-left
+              input.input.is-rounded(type='text' placeholder='Busca productos' name='s')
+              span.icon.is-left
+                i.fa.fa-search
+            button.button.is-info.is-rounded(type='submit') 
+                  | Buscar
+        a.navbar-item.is-active.is-size-5.has-text-weight-semibold(href='/')
+          | Home
+        a.navbar-item.is-size-5.has-text-weight-semibold(href='/productos')
+          | Products
+        if user
+          a.navbar-item.is-size-5.has-text-weight-semibold(href='/logout')
+            |#{user.firstname} | Logout
+        else
+          a.navbar-item.is-size-5.has-text-weight-semibold(href='/login')
+            | Login
+        a.navbar-item.is-size-5.has-text-weight-semibold
+          i.fa-solid.fa-cart-shopping
+
+        

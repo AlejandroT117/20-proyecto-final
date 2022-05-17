@@ -1,0 +1,26 @@
+extends layouts/page.pug 
+block pageContent
+  section.hero
+    .hero-body.has-text-centered
+      .container
+        .columns
+          .column.is-6.is-offset-3
+            .login
+              img(src='/static/img/logo.png' width='125px')
+              if messages.error
+                include includes/form_errors.pug
+              form(action='/login' method='post')
+                .field
+                  .control
+                    input.input.is-medium.is-rounded(type='email' placeholder='Tu email' autocomplete='username' required='' name='email')
+                .field
+                  .control
+                    input.input.is-medium.is-rounded(type='password' placeholder='Tu contraseña' autocomplete='current-password' required='' name='pwd')
+                br
+                button.button.is-block.is-fullwidth.is-primary.is-medium.is-rounded(type='submit')
+                  | Ingresa
+              br
+              nav.level
+                .level-item.has-text-centered
+                  div
+              a(href='/register') Crear una cuenta

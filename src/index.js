@@ -11,18 +11,22 @@ const MongoStore = require('connect-mongo')
 //passport
 const passport = require('passport')
 const flash = require('express-flash')
-//const initializePassport = require('./passport/local')
+const initializePassport = require('./passport/local')
 
 const pugEngine = require('./engine')
 const logger = require('./log')
 
 const { HOSTNAME, SCHEMA, DATABASE, USER, PASSWORD, OPTIONS  } = require("./config");
 
-const prodsRouter = require("./routes/productos");
 const homeRouter = require("./routes/home");
+const loginRouter = require("./routes/login");
+
+const prodsRouter = require("./routes/productos");
 const carritoRouter = require("./routes/carrito");
 
-const MONGO_URI = `${SCHEMA}://${USER}:${PASSWORD}@${HOSTNAME}/${DATABASE}?${OPTIONS}`;
+const MONGO_URI = process.env.NODE_ENV === 'production' ?
+`${SCHEMA}://${USER}:${PASSWORD}@${HOSTNAME}/${DATABASE}?${OPTIONS}`:
+'mongodb://localhost:27017/ecommerce';
 
 /* Mongo */
 (async()=>{
@@ -48,7 +52,7 @@ const MONGO_URI = `${SCHEMA}://${USER}:${PASSWORD}@${HOSTNAME}/${DATABASE}?${OPT
     /* express */
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
-    app.use("/static", express.static(path.join(__dirname, "/public")));
+    app.use("/static", express.static(path.join(__dirname, "../public")));
     app.use(cookieParser('secret'))
     app.use(
       session({
@@ -65,13 +69,14 @@ const MONGO_URI = `${SCHEMA}://${USER}:${PASSWORD}@${HOSTNAME}/${DATABASE}?${OPT
     )
 
     //passport initialize
-    //initializePassport(passport)
+    initializePassport(passport)
     app.use(flash())
     app.use(passport.initialize())
     app.use(passport.session())
 
     //routes
     app.use("/", homeRouter);
+    app.use("/", loginRouter);
 
     //APIs
     app.use("/api/productos", prodsRouter);

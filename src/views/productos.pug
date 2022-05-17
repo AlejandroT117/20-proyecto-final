@@ -1,0 +1,23 @@
+extends layouts/page.pug 
+block pageContent
+  div.columns.is-desktop.is-flex.is-flex-wrap-wrap
+    if productos.length > 0  
+      each p in productos
+        - var img = p.img
+        .column.is-3
+          .card
+            .card-image
+              figure.image.is-4by3
+                img(src=img alt=img)
+            .card-content
+              .media
+                .media-content
+                  p.title.is-4 #{p.nombre}
+                  h2.subtitle.is-6 $#{p.precio}
+              .content
+                | #{p.descripcion} 
+                | Stock: #{p.stock}
+                button.button.is-primary Añadir al carrito
+    else
+      .column.is-3
+        h2.subtitle No hay productos para mostrar

@@ -1,14 +1,15 @@
 const prodModel = require("../models/products");
+const logger = require('../log')
 
 module.exports = {
   loadData: async (req, res) => {
     try {
       const productos = await prodModel.loadData("../database/data.json");
       res.status(200).send(`No. productos registrados: ${productos}`);
-      console.log(`Productos cargados desde json ${productos}`);
+      logger.log(`Productos cargados desde json ${productos}`);
     } catch (e) {
       res.status(400).send("Error cargando datos");
-      console.log(`Error cargando datos ${e}`);
+      logger.error(`Error cargando datos ${e}`);
     }
   },
   get: async (req, res) => {
@@ -18,7 +19,7 @@ module.exports = {
       res.status(200).send(allProducts);
     } catch (e) {
       res.status(400).send("Error obteniendo productos");
-      console.log(`Error en get All Products ${e}`);
+      logger.error(`Error en get All Products ${e}`);
     }
   },
   getById: async (req, res) => {
@@ -26,10 +27,10 @@ module.exports = {
     try {
       const producto = await prodModel.getById(id);
       res.status(200).send(producto);
-      console.log(`Producto encontrado por Id: ${producto}`)
+      logger.log(`Producto encontrado por Id: ${producto}`)
     } catch (e) {
       res.status(400).send("Error encontrando producto por Id");
-      console.log(`Error obteniendo producto por Id: ${e}`);
+      logger.error(`Error obteniendo producto por Id: ${e}`);
     }
   },
   save: async (req, res) => {
@@ -48,7 +49,7 @@ module.exports = {
       }
     } catch (e) {
       res.status(400).send("Error creando nuevo producto");
-      console.log(`Error creando nuevo producto: ${e}`);
+      logger.error(`Error creando nuevo producto: ${e}`);
     }
   },
   editById: async (req, res) => {
@@ -61,10 +62,10 @@ module.exports = {
         "Productos encontrados": producto.matchedCount,
         "Productos modificados": producto.modifiedCount,
       });
-      console.log(`Producto encontrado por ID: ${JSON.stringify(producto)}`)
+      logger.log(`Producto encontrado por ID: ${JSON.stringify(producto)}`)
     } catch (e) {
       res.status(400).send("Error editando producto");
-      console.log(`Error editando producto: ${e}`);
+      logger.error(`Error editando producto: ${e}`);
     }
   },
   deleteById: async (req, res) => {
@@ -72,20 +73,20 @@ module.exports = {
     try {
       const borrado = await prodModel.deleteById(id);
       res.status(200).send(`Un producto borrado`);
-      console.log(`Un producto borrado: ${borrado}`)
+      logger.log(`Un producto borrado: ${borrado}`)
     } catch (e) {
       res.status(400).send("Error borrando producto");
-      console.log(`Error borrando producto: ${e}`);
+      logger.error(`Error borrando producto: ${e}`);
     }
   },
   deleteAll: async (req, res) => {
     try {
       const borrado = await prodModel.deleteAll();
       res.status(200).send(`No. productos borrados: ${borrado.deletedCount}`);
-      console.log(`Productos borrados ${borrado}`);
+      logger.log(`Productos borrados ${borrado}`);
     } catch (e) {
       res.status(400).send("Error borrando productos");
-      console.log(`Error borrando productos: ${e}`);
+      logger.error(`Error borrando productos: ${e}`);
     }
   }
 };

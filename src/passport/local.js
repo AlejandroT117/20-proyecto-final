@@ -11,7 +11,7 @@ module.exports = (passport) =>{
       }
 
       if(!await userModel.isPasswordValid(email, password)){
-        return done(null, false, { message: 'Constraseña incorrecta'})
+        return done(null, false, { message: 'Contraseña incorrecta'})
       }
 
       const user = await userModel.getByEmail(email)
