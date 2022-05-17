@@ -1,0 +1,21 @@
+extends layouts/page.pug 
+block pageContent
+  div.columns.is-desktop.is-flex.is-flex-wrap-wrap
+    .column.is-3
+      figure.image.is-4by3
+        img(src=`/static/img/users/${user.id}.png` alt='No hay imagen aún' height='400px')
+    .column.is-8
+      h2.subtitle Edita tu foto de perfil
+      .file.has-name.is-right.is-info
+      form(action="/config" enctype="multipart/form-data" method="post")
+        label.file-label
+          input.file-input(type='file' name='img' accept='image/png, image/jpeg, image/jpg, image/gif')
+          span.file-cta
+            span.file-icon
+              i.fas.fa-upload
+            span.file-label
+              | Elige una imagen&mldr;
+          span.file-name
+            | Tu nueva foto de perfil
+        br
+        button.button.is-primary(type='submit') Subir

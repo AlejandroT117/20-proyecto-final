@@ -8,6 +8,8 @@ class UserModel {
       email: String,
       firstname: String,
       lastname: String,
+      direccion: String,
+      phone: String,
       password: String,
       rol: {type: String, default: 'cliente'},
       creado: String,

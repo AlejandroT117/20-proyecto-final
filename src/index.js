@@ -8,6 +8,13 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 const MongoStore = require('connect-mongo')
 
+if(process.env.NODE_ENV!='production'){
+  const dotenv = require('dotenv')
+  dotenv.config({
+    path: path.resolve(__dirname, '../.env')
+  })
+}
+
 //passport
 const passport = require('passport')
 const flash = require('express-flash')
@@ -20,6 +27,7 @@ const { HOSTNAME, SCHEMA, DATABASE, USER, PASSWORD, OPTIONS  } = require("./conf
 
 const homeRouter = require("./routes/home");
 const loginRouter = require("./routes/login");
+const configRouter = require("./routes/config");
 
 const prodsRouter = require("./routes/productos");
 const carritoRouter = require("./routes/carrito");
@@ -27,6 +35,8 @@ const carritoRouter = require("./routes/carrito");
 const MONGO_URI = process.env.NODE_ENV === 'production' ?
 `${SCHEMA}://${USER}:${PASSWORD}@${HOSTNAME}/${DATABASE}?${OPTIONS}`:
 'mongodb://localhost:27017/ecommerce';
+
+
 
 /* Mongo */
 (async()=>{
@@ -77,6 +87,7 @@ const MONGO_URI = process.env.NODE_ENV === 'production' ?
     //routes
     app.use("/", homeRouter);
     app.use("/", loginRouter);
+    app.use("/config", configRouter);
 
     //APIs
     app.use("/api/productos", prodsRouter);
@@ -93,10 +104,12 @@ const MONGO_URI = process.env.NODE_ENV === 'production' ?
         .status(400)
         .send({ status: 404, title: "Not Found", msg: "Route not found" });
     });
-    app.listen(PORT, () =>
+    /* app.listen(PORT, () =>
       logger.log(`Escuchando en: http://localhost:${PORT}`)
-    );
+    ); */
   } catch(e){
     logger.error(`Error en mongo: ${err}`);
   }
 })()
+
+module.exports = app

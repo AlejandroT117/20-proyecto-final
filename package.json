@@ -2,10 +2,13 @@
   "name": "ecommerce-back-end",
   "version": "1.0.0",
   "description": "PRoyecto final coderhouse backend ",
-  "main": "./src/index.js",
+  "main": "cluster.js",
   "scripts": {
-    "start": "node ./src/index.js",
-    "dev": "nodemon --ignore './public/*' -r dotenv/config ."
+    "start": "node .",
+    "dev": "nodemon .",
+    "start:cluster": "node . -m cluster",
+    "testFork:artillery": "artillery quick --count=50 -n 20 http://localhost:8080/productos > ./tests/result_artilleryFork.txt",
+    "testCluster:artillery": "artillery quick --count=50 -n 20 http://localhost:8080/productos > ./tests/result_artilleryCluster.txt"
   },
   "keywords": [
     "ecommerce"
@@ -24,15 +27,18 @@
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.3",
     "mongoose": "^6.2.7",
+    "multer": "^1.4.4",
     "nodemailer": "^6.7.5",
     "passport": "^0.5.2",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
     "pug": "^3.0.2",
     "twilio": "^3.77.0",
-    "winston": "^3.7.2"
+    "winston": "^3.7.2",
+    "yargs": "^17.5.1"
   },
   "devDependencies": {
+    "artillery": "^2.0.0-16",
     "dotenv": "^16.0.1",
     "nodemon": "^2.0.15"
   }

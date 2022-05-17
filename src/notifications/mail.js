@@ -2,6 +2,7 @@ const nodemailer = require('nodemailer')
 const moment = require('moment')
 
 const {GMAIL_ADDRESS, GMAIL_PWD} = require('../config').mail
+console.log(GMAIL_ADDRESS, GMAIL_PWD)
 const logger = require('../log')
 class MailSender {
 

@@ -24,7 +24,7 @@ module.exports = (passport) => {
   };
 
   const registerUser = async (req, email, password, done) => {
-    const { firstname, lastname } = req.body;
+    const { firstname, lastname, direccion, phone } = req.body;
     try {
       if (await userModel.existsByEmail(email)) {
         return done(null, false, { message: "El usuario ya existe" });
@@ -35,13 +35,15 @@ module.exports = (passport) => {
         firstname,
         lastname,
         password,
+        direccion,
+        phone,
       });
 
-      await mailSender.newUserMail({ email, firstname, lastname });
       done(null, {
         ...user,
         id: user._id,
       });
+      await mailSender.newUserMail({ email, firstname, lastname });
     } catch (e) {
       done(e);
     }
