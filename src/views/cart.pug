@@ -4,7 +4,7 @@ block pageContent
   if cartById.productos.length
     div.headerPayment
       h1.title Total: $#{total} MXN
-      button.button.is-primary Pagar
+      a.button.is-primary(href='/pedido') Pagar
     div.cart
       each p in cartById.productos
         - var img = p.img

@@ -16,3 +16,7 @@
 05-16-2022 22:06:38- error: Error en Is in Cart
 05-16-2022 22:34:47- error: Error en Is in Cart
 05-16-2022 22:35:54- error: Error en Is in Cart
+05-17-2022 01:38:18- error: Algo salió mal en el pedido
+05-17-2022 01:41:06- error: Algo salió mal en el pedido: Error: ENOENT: no such file or directory, open 'D:\Coderhouse\backend_js\20-proyecto-final\src\notifications\pedido.png'
+05-17-2022 01:44:03- error: Algo salió mal en el pedido: TypeError: Assignment to constant variable.
+05-17-2022 01:45:19- error: Algo salió mal en el pedido: TypeError: Assignment to constant variable.

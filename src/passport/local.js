@@ -30,7 +30,6 @@ module.exports = (passport) => {
         return done(null, false, { message: "El usuario ya existe" });
       }
 
-      await mailSender.newUserMail({ email, firstname, lastname });
       const user = await userModel.save({
         email,
         firstname,
@@ -38,6 +37,7 @@ module.exports = (passport) => {
         password,
       });
 
+      await mailSender.newUserMail({ email, firstname, lastname });
       done(null, {
         ...user,
         id: user._id,

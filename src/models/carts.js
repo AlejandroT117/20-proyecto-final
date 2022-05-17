@@ -153,6 +153,14 @@ class ContenedorCart {
     }
   }
 
+  async deleteByUserId(id) {
+    try {
+      const borrado = await this.model.deleteOne({ userId: id });
+      return borrado;
+    } catch (e) {
+      console.log(`Error en borrado por id ${e}`);
+    }
+  }
   async getProductsByIdCart(id) {
     try {
       const carrito = await this.model.findOne({ _id: id });

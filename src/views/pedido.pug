@@ -1,0 +1,8 @@
+extends layouts/page.pug 
+block pageContent
+  h1.title Tu pedido con valor de $#{total}MXN está siendo procesado
+  if sent
+    h2.subtitle Un correo se te ha enviado. En breve te haremos llegar tu clave de rastreo
+  else 
+    h3 Disculpa las molestas. En breve se te enviará un correo 
+  

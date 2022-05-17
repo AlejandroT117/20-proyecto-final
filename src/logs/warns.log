@@ -19,3 +19,7 @@
 05-16-2022 23:47:32- warn: Borrando producto: {"acknowledged":true,"modifiedCount":1,"upsertedId":null,"upsertedCount":0,"matchedCount":1}
 05-16-2022 23:50:12- warn: Borrando producto: {"acknowledged":true,"modifiedCount":1,"upsertedId":null,"upsertedCount":0,"matchedCount":1}
 05-16-2022 23:50:36- warn: Borrando producto: {"acknowledged":true,"modifiedCount":1,"upsertedId":null,"upsertedCount":0,"matchedCount":1}
+05-17-2022 01:38:18- error: Algo salió mal en el pedido
+05-17-2022 01:41:06- error: Algo salió mal en el pedido: Error: ENOENT: no such file or directory, open 'D:\Coderhouse\backend_js\20-proyecto-final\src\notifications\pedido.png'
+05-17-2022 01:44:03- error: Algo salió mal en el pedido: TypeError: Assignment to constant variable.
+05-17-2022 01:45:19- error: Algo salió mal en el pedido: TypeError: Assignment to constant variable.

@@ -3,7 +3,6 @@ const moment = require('moment')
 
 const {GMAIL_ADDRESS, GMAIL_PWD} = require('../config').mail
 const logger = require('../log')
-const TEST_MAIL = 'shakira.greenfelder80@ethereal.email'
 class MailSender {
 
   constructor(){
@@ -15,34 +14,47 @@ class MailSender {
           pass: GMAIL_PWD
       }
     });
-
-/*     this.transporter= nodemailer.createTransport({
-      host: 'smtp.ethereal.email',
-      port: 587,
-      auth: {
-          user: TEST_MAIL,
-          pass: 'nJMDQJR1SKXS98pMVb'
-      }
-    }) */
   } 
   
+  async send(productos, email) {
+    const template = `
+      <h1 style="color: blue;"> Tu pedido esta siendo procesado </h1>
+      <p>Aqui tus productos: </p>
+      <ul>
+        ${productos.join(" ")}
+      </ul>
+    `
+
+    const mailOptions = {
+      from: "Notifaciones de mi tienda <noreply@thepower.com>",
+      subject: "Tu pedido en la tienda de bicicletas",
+      to: email,
+      html: template,
+      attachments: [{
+        path: __dirname + '/pedido.webp'
+      }]
+    }
+
+    const response = await this.transporter.sendMail(mailOptions)
+    logger.log(`Email status new buy: ${JSON.stringify(response)}`)
+  }
 
   async newUserMail({firstname, lastname, email}){
     
     const template = `
       <h1 style="color: blue;"> Nuevo usuario ${email}</h1>
       <h2> ${firstname} ${lastname}</h2>
-      <h3>${moment().format('MMMM Do YYYY, h:mm:ss a')}</h3>
+      <h3>${moment().format('MMMM D YYYY, h:mm:ss a')}</h3>
     `
     const mailOptions ={
-      from: "Notifaciones de mi tienda <noreply@myshop.com>",
+      from: "Notifaciones de mi tienda <noreply@thepower.com>",
       subject: "Nuevo usuario registrado",
-      to: TEST_MAIL,
+      to: GMAIL_ADDRESS,
       html: template
     }
 
     const response = await this.transporter.sendMail(mailOptions)
-    logger.log(`Correo enviado ${response}`)
+    logger.log(`Email status new user: ${JSON.stringify(response)}`)
   }
 }
 module.exports = new MailSender()

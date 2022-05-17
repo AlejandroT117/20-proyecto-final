@@ -5,6 +5,10 @@ const auth = require("../middlewares/auth");
 
 const prodModel = require("../models/products");
 const cartModel = require("../models/carts");
+const pedidoModel = require('../models/pedidos')
+const mailSender = require("../notifications/mail");
+
+const logger = require("../log");
 
 //Router index
 router.get("/", (req, res) => {
@@ -28,4 +32,28 @@ router.get("/cart", auth, async (req, res) => {
 
   res.render("cart", { user, cartById, total: total });
 });
+
+router.get("/pedido", auth, async(req,res)=>{
+  const user = req.user;
+  const cartById = await cartModel.getByUserId(user.id);
+  const total = cartById.productos.reduce((total, curr) => total + curr.precio, 0);
+  let sent = false
+
+  const productos = cartById.productos.map(el => el.nombre)
+
+  try{
+    await pedidoModel.save({
+      userId: user.id,
+      total: total
+    })
+    await cartModel.deleteByUserId(user.id)
+
+    await mailSender.send(productos, user.email)
+    sent = true
+  }catch(e){
+    logger.error(`Algo salió mal en el pedido: ${e}`)
+  }
+  res.render('pedido', { user, total: total, sent: sent })
+})
+
 module.exports = router;

@@ -9,7 +9,7 @@ module.exports = {
   },
   mail: {
     GMAIL_PWD: process.env.GMAIL_PWD,
-    GMAIL_ADRESS: process.env.GMAIL_ADRESS
+    GMAIL_ADDRESS: process.env.GMAIL_ADDRESS
   },
   twilio: {
     TWILIO_AUTH: process.env.TWILIO_AUTH,
@@ -17,13 +17,3 @@ module.exports = {
     TWILIO_PHONE: process.env.TWILIO_PHONE,
   }
 };
-
-/* module.exports={
-  HOSTNAME: '127.0.0.1',
-  SCHEMA: 'mongodb',
-  DATABASE:'ecommerce', 
-  DBPORT: 27017,
-  OPTIONS: 'readPreference=primary'
-} */
-
-/* atlas mongo db */
