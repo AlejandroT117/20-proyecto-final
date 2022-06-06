@@ -3,9 +3,11 @@ const { Router } = express;
 const router = Router();
 const auth = require("../middlewares/auth");
 
-const prodModel = require("../models/products");
-const cartModel = require("../models/carts");
-const pedidoModel = require('../models/pedidos')
+const ModelFactory = require('../models/model.factory')
+
+const prodModel = ModelFactory.getModel('productos');
+const cartModel = ModelFactory.getModel('cart');
+const pedidoModel = ModelFactory.getModel('pedido');
 const mailSender = require("../notifications/mail");
 
 const logger = require("../log");

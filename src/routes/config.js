@@ -6,8 +6,9 @@ const multer = require('multer')
 const auth = require("../middlewares/auth");
 const logger = require('../log')
 
-const prodModel = require("../models/products");
-const cartModel = require("../models/carts");
+const ModelFactory = require('../models/model.factory')
+const cartModel = ModelFactory.getModel('cart');
+
 
 
 const storage = multer.diskStorage({

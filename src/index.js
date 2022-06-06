@@ -6,7 +6,8 @@ const PORT = process.env.PORT || 8080;
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const session = require("express-session");
-const MongoStore = require('connect-mongo')
+const MongoStore = require('connect-mongo');
+const cors = require('cors')
 
 if(process.env.NODE_ENV!='production'){
   const dotenv = require('dotenv')
@@ -45,18 +46,7 @@ const MONGO_URI = process.env.NODE_ENV === 'production' ?
     logger.log("Corriendo mongo");
   
   
-    app.use((req, res, next) => {
-      res.header("Access-Control-Allow-Origin", "*");
-      res.header(
-        "Access-Control-Allow-Headers",
-        "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-      );
-      if (req.method === "OPTIONS") {
-        res.header("Access-Control-Allow-Methods", "PUT, POST, DELETE, GET");
-        return res.status(200).json({});
-      }
-      next();
-    });
+    app.use(cors());
  
     pugEngine(app) 
     /* express */

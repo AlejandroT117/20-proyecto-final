@@ -1,4 +1,5 @@
-const prodModel = require("../models/products");
+const ModelFactory = require('../models/model.factory');
+const prodModel = ModelFactory.getModel('productos');
 const logger = require('../log')
 
 module.exports = {

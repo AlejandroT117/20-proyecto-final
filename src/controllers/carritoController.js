@@ -1,4 +1,5 @@
-const cartModel = require("../models/carts");
+const ModelFactory = require("../models/model.factory");
+const cartModel = ModelFactory.getModel("cart");
 const logger = require("../log");
 
 module.exports = {
@@ -167,10 +168,14 @@ module.exports = {
     };
     try {
       const productos = await cartModel.saveProdByIdCart(id, new_product);
-      if(productos){
-        res.status(201).send(`Se añadió al carrito ${id}, el producto ${nombre}`);
-      }else{
-        res.status(201).send(`En el carrito ${id}, ya se encuentra el producto ${nombre}`);
+      if (productos) {
+        res
+          .status(201)
+          .send(`Se añadió al carrito ${id}, el producto ${nombre}`);
+      } else {
+        res
+          .status(201)
+          .send(`En el carrito ${id}, ya se encuentra el producto ${nombre}`);
       }
       logger.log(`Se añadió al carrito ${id}, el producto ${nombre}`);
     } catch (e) {
