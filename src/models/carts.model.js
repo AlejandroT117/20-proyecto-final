@@ -37,10 +37,10 @@ class ContenedorCart {
         i++;
       }
 
-      console.log("data cargada en db");
+      logger.log("data cargada en db");
       return i;
     } catch (e) {
-      console.log(e);
+      logger.log(e);
     }
   }
 
@@ -50,12 +50,12 @@ class ContenedorCart {
         new_object.productos.cantidad = 1;
       }
       const carrito = await this.model.create(new_object);
-      console.log("-----");
-      console.log(JSON.stringify(carrito, null, 2));
+      logger.log("-----");
+      logger.log(JSON.stringify(carrito, null, 2));
 
       return carrito;
     } catch (e) {
-      console.log(`Error creando carrito ${e}`);
+      logger.log(`Error creando carrito ${e}`);
     }
   }
 
@@ -80,7 +80,7 @@ class ContenedorCart {
         };
       });
     } catch (e) {
-      console.log(`Error en get all ${e}`);
+      logger.log(`Error en get all ${e}`);
     }
   }
   async isInCart(idCart, new_product) {
@@ -111,7 +111,7 @@ class ContenedorCart {
       }
       return carrito;
     } catch (e) {
-      console.log(`Error en get by id: ${e}`);
+      logger.log(`Error en get by id: ${e}`);
     }
   }
   async createVoidCart(id) {
@@ -132,7 +132,7 @@ class ContenedorCart {
       }
       return carrito;
     } catch (e) {
-      console.log(`Error en get by id: ${e}`);
+      logger.log(`Error en get by id: ${e}`);
     }
   }
   async deleteAll() {
@@ -140,7 +140,7 @@ class ContenedorCart {
       const carrito = await this.model.deleteMany({});
       return carrito;
     } catch (e) {
-      console.log(`Error borrando todos los carritos ${e}`);
+      logger.log(`Error borrando todos los carritos ${e}`);
     }
   }
 
@@ -149,7 +149,7 @@ class ContenedorCart {
       const borrado = await this.model.deleteOne({ _id: id });
       return borrado;
     } catch (e) {
-      console.log(`Error en borrado por id ${e}`);
+      logger.log(`Error en borrado por id ${e}`);
     }
   }
 
@@ -158,7 +158,7 @@ class ContenedorCart {
       const borrado = await this.model.deleteOne({ userId: id });
       return borrado;
     } catch (e) {
-      console.log(`Error en borrado por id ${e}`);
+      logger.log(`Error en borrado por id ${e}`);
     }
   }
   async getProductsByIdCart(id) {
@@ -170,7 +170,7 @@ class ContenedorCart {
 
       return carrito.productos;
     } catch (e) {
-      console.log(`Error en get productos by id: ${e}`);
+      logger.log(`Error en get productos by id: ${e}`);
     }
   }
 
@@ -190,7 +190,7 @@ class ContenedorCart {
 
       return carrito;
     } catch (e) {
-      console.log(e);
+      logger.log(e);
     }
   }
 
@@ -202,7 +202,7 @@ class ContenedorCart {
       );
       return borrado;
     } catch (e) {
-      console.log(`Rrror borrando producto por id ${e}`);
+      logger.log(`Rrror borrando producto por id ${e}`);
     }
   }
 }

@@ -130,6 +130,10 @@ class Contenedor {
       logger.error(`Error borrando todos los productos ${e}`);
     }
   }
+
+  async count(){
+    return await this.model.countDocuments({})
+  }
 }
 
 module.exports = new Contenedor();

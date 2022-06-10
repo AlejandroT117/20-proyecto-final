@@ -20,3 +20,7 @@
 05-17-2022 01:41:06- error: Algo salió mal en el pedido: Error: ENOENT: no such file or directory, open 'D:\Coderhouse\backend_js\20-proyecto-final\src\notifications\pedido.png'
 05-17-2022 01:44:03- error: Algo salió mal en el pedido: TypeError: Assignment to constant variable.
 05-17-2022 01:45:19- error: Algo salió mal en el pedido: TypeError: Assignment to constant variable.
+06-10-2022 12:04:44- error: Error en get All Products TypeError: prodModel.getAll is not a function
+06-10-2022 12:07:17- error: Error en get All Products TypeError: prodModel.getAll is not a function
+06-10-2022 12:14:53- error: Error en get All Products TypeError: prodModel.getAll is not a function
+06-10-2022 12:14:55- error: Error en get All Products TypeError: prodModel.getAll is not a function

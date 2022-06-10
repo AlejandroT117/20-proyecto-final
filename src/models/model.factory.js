@@ -1,7 +1,7 @@
 const userModel = require('./user.model.')
 const cartModel = require('./carts.model')
 const pedidoModel = require('./pedidos.model')
-const productosModel = require('./pedidos.model')
+const productosModel = require('./products.model.')
 
 class ModelFactory{
   static getModel(modelName){

@@ -1,6 +1,7 @@
 const { Schema, model } = require("mongoose");
 const moment = require("moment");
 const bcrypt = require("bcrypt");
+const logger = require("../log");
 
 class UserModel {
   constructor() {
@@ -47,7 +48,7 @@ class UserModel {
 
   async getAll(orderBy = "", search = "") {
     try {
-      console.log(`Getting users`);
+      logger.log(`Getting users`);
       let find = search ? { email: { $regex: search, $options: "i" } } : {};
       let data = {};
       if (orderBy) {
@@ -60,7 +61,7 @@ class UserModel {
 
       return data;
     } catch (e) {
-      console.log("Error al obtener datos");
+      logger.log("Error al obtener datos");
       throw e;
     }
   }

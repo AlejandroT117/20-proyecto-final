@@ -8,7 +8,9 @@
     "dev": "nodemon .",
     "start:cluster": "node . -m cluster",
     "testFork:artillery": "artillery quick --count=50 -n 20 http://localhost:8080/productos > ./tests/result_artilleryFork.txt",
-    "testCluster:artillery": "artillery quick --count=50 -n 20 http://localhost:8080/productos > ./tests/result_artilleryCluster.txt"
+    "testCluster:artillery": "artillery quick --count=50 -n 20 http://localhost:8080/productos > ./tests/result_artilleryCluster.txt",
+    "test-axios": "node ./tests/http/axios.js",
+    "test-mocha": "mocha './tests/unit/**/*.test.js'"
   },
   "keywords": [
     "ecommerce"
@@ -16,16 +18,20 @@
   "author": "Uriel Alejandro Trejo Martínez",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
+    "chai": "^4.3.6",
     "connect-mongo": "^4.6.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "express": "^4.17.3",
     "express-flash": "^0.0.2",
     "express-session": "^1.17.3",
+    "faker": "^6.6.6",
     "firebase": "^9.6.9",
     "firebase-admin": "^10.0.2",
     "jsonwebtoken": "^8.5.1",
+    "mocha": "^10.0.0",
     "moment": "^2.29.3",
     "mongoose": "^6.2.7",
     "multer": "^1.4.4",
@@ -34,6 +40,7 @@
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
     "pug": "^3.0.2",
+    "supertest": "^6.2.3",
     "twilio": "^3.77.0",
     "winston": "^3.7.2",
     "yargs": "^17.5.1"
