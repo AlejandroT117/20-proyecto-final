@@ -12,7 +12,7 @@ const cors = require('cors')
 if(process.env.NODE_ENV!='production'){
   const dotenv = require('dotenv')
   dotenv.config({
-    path: path.resolve(__dirname, '../.env')
+    path: path.resolve(__dirname, '../local.env')
   })
 }
 
@@ -37,7 +37,7 @@ const MONGO_URI = process.env.NODE_ENV === 'production' ?
 `${SCHEMA}://${USER}:${PASSWORD}@${HOSTNAME}/${DATABASE}?${OPTIONS}`:
 'mongodb://localhost:27017/ecommerce';
 
-
+const graphql = require('./graphql');
 
 /* Mongo */
 (async()=>{
@@ -47,7 +47,6 @@ const MONGO_URI = process.env.NODE_ENV === 'production' ?
   
   
     app.use(cors());
- 
     pugEngine(app) 
     /* express */
     app.use(express.json());
@@ -75,6 +74,7 @@ const MONGO_URI = process.env.NODE_ENV === 'production' ?
     app.use(passport.session())
 
     //routes
+    graphql(app)
     app.use("/", homeRouter);
     app.use("/", loginRouter);
     app.use("/config", configRouter);

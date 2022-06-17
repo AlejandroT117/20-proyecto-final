@@ -1,40 +1,65 @@
 async function updateCartNumber(userId) {
-  const cartNumber = document.getElementById('cartNumber')
+  const cartNumber = document.getElementById("cartNumber");
 
-  const cartLengthResponse = await fetch(`/api/carrito/${userId}/user`)
-  const cart = await cartLengthResponse.json()
+  const cartLengthResponse = await fetch(`/api/carrito/${userId}/user`);
+  const cart = await cartLengthResponse.json();
 
-  cartNumber.innerText = cart.productos.length
+  cartNumber.innerText = cart.productos.length;
 }
-
 
 async function addToCart(userId, productId) {
-  const producto = await fetch(`/api/productos/${productId}`)
-  const productParsed = await producto.json()
-  
+  const producto = await fetch(`/api/productos/${productId}`);
+  const productParsed = await producto.json();
+
   const res = await fetch(`/api/carrito/${userId}/productos`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      Accept: "application/json",
+      "Content-Type": "application/json",
     },
-    body:JSON.stringify({...productParsed})
-  })
+    body: JSON.stringify({ ...productParsed }),
+  });
   if (res.status != 200 && res.status != 201) {
-    return
+    return;
   }
 
-  await updateCartNumber(userId)
+  await updateCartNumber(userId);
 }
 
-async function deleteFromCart (userId,productId){
-  const res = await fetch(`/api/carrito/${userId}/productos/${productId}`,{
-    method: 'DELETE'
-  })
+async function deleteFromCart(userId, productId) {
+  const res = await fetch(`/api/carrito/${userId}/productos/${productId}`, {
+    method: "DELETE",
+  });
   if (res.status != 200 && res.status != 201) {
-    return
+    return;
   }
-  await updateCartNumber(userId)
-  
-  window.location.href='/cart'
+  await updateCartNumber(userId);
+
+  window.location.href = "/cart";
 }
+
+async function getProducts() {
+  const res = await fetch("http://localhost:8080/graphql", {
+    method: "POST",
+    body: `
+    {
+      getAllProducts{
+        id
+        nombre
+        descripcion
+        descuento
+        codigo
+        img
+        precio
+        stock
+      }
+    }
+    `,
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+
+  return res.json()
+}
+
