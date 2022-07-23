@@ -6,7 +6,7 @@ const productModel = require("../../src/models/products.model.")
 describe('Admin Service', () => {
 
   before(async () => {
-    console.log('connecting to mongo')
+    logger.log('connecting to mongo')
     await mongoose.connect('mongodb://localhost:27017/ecommerce')
   })
 

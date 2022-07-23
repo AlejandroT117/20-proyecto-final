@@ -26,6 +26,7 @@ module.exports = {
       codigo,
       descuento,
     } = req.body;
+    
     const new_cart = {
       userId,
       productos: {

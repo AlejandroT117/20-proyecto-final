@@ -26,12 +26,12 @@ const logger = require('./log')
 
 const { HOSTNAME, SCHEMA, DATABASE, USER, PASSWORD, OPTIONS  } = require("./config").mongoConfig;
 
-const homeRouter = require("./routes/home");
-const loginRouter = require("./routes/login");
-const configRouter = require("./routes/config");
+const homeRouter = require("./routes/home.routes");
+const loginRouter = require("./routes/login.routes");
+const configRouter = require("./routes/config.routes");
 
-const prodsRouter = require("./routes/productos");
-const carritoRouter = require("./routes/carrito");
+const prodsRouter = require("./routes/products.routes");
+const carritoRouter = require("./routes/cart.routes");
 
 const MONGO_URI = process.env.NODE_ENV === 'production' ?
 `${SCHEMA}://${USER}:${PASSWORD}@${HOSTNAME}/${DATABASE}?${OPTIONS}`:
@@ -94,9 +94,6 @@ const graphql = require('./graphql');
         .status(400)
         .send({ status: 404, title: "Not Found", msg: "Route not found" });
     });
-    /* app.listen(PORT, () =>
-      logger.log(`Escuchando en: http://localhost:${PORT}`)
-    ); */
   } catch(e){
     logger.error(`Error en mongo: ${err}`);
   }
