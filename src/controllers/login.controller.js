@@ -25,13 +25,19 @@ module.exports = {
     logger.log(`Nuevo token creado ${token}`);
     res.clearCookie("token");
     res.cookie("token", token);
-    res.cookie("user", req.user.email);
+    res.cookie("email", req.user.email);
+    res.cookie('firstname', req.user.firstname);
+    res.cookie('lastname', req.user.lastname);
+    res.cookie('id', req.user.id);
 
     res.redirect("/");
   },
   logout: (req, res) => {
     logger.log(`${req.user.email} ending session...`);
     res.clearCookie("user");
+    res.clearCookie("firstname");
+    res.clearCookie("lastname");
+    res.clearCookie("id");
     req.logOut();
     res.redirect("/");
   },

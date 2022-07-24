@@ -1,0 +1,25 @@
+.chat
+  .toggle
+    i.fa.solid.fa-comments 
+  .chat-container
+    .title-container
+      | Algunos comentarios de nuestros clientes
+    .message-container
+      .message-chat.received
+        .user
+          | Bot
+        .text
+          | Bienvenido
+        .date 
+          | Ahora
+      .message-chat.own
+        .user
+          | Bot
+        .text
+          | Bienvenido
+        .date 
+          | Ahora
+    .input-container
+      form(action="")#form-chat 
+        input#messsageInput(type="text", name="message")
+        button(type="submit")#send-chat Enviar
