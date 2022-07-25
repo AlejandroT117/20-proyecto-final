@@ -1,3 +1,18 @@
+const chatContainer = document.querySelector(".chat-container");
+const messageContainer = document.querySelector(".message-container");
+const formChat = document.getElementById("form-chat");
+const inputChat = document.getElementById("messsageInput");
+const toogleChat = document.querySelector(".toggle");
+
+toogleChat.addEventListener("click", () => {
+  console.log(chatContainer.className);
+  if (!chatContainer.className.match(/expanded/g)) {
+    chatContainer.classList.add("expanded");
+  } else {
+    chatContainer.classList.remove("expanded");
+  }
+});
+
 function cookieParser() {
   return (document.cookie || "").split("; ").reduce((obj, cookie) => {
     const [name, value] = cookie.split("=");
@@ -24,21 +39,45 @@ function renderMessages(messages) {
   }
 }
 
-function renderMessage(content, user, date) {
+user.socket.on("message", (message) => {
+  const { user, mensaje, fecha } = message;
+  renderMessage(mensaje, user, fecha);
+});
+
+function renderMessage(content, userMsg, date) {
   const messageDiv = document.createElement("div");
-  messageDiv.className("message-chat");
+  messageDiv.classList.add("message-chat");
   const userDiv = document.createElement("div");
-  userDiv.className("user");
+  userDiv.classList.add("user");
   const textDiv = document.createElement("div");
-  textDiv.className("text");
+  textDiv.classList.add("text");
+
   const dateDiv = document.createElement("div");
-  dateDiv.className("date");
+  dateDiv.classList.add("date");
 
-  userDiv.innerHTML = user;
+  if (user.email === userMsg) {
+    userDiv.classList.add("own");
+  } else {
+    userDiv.classList.add("received");
+  }
+
+  userDiv.innerHTML = userMsg;
   textDiv.innerHTML = content;
-  dateDiv.innerHTML = date;
 
-  messageDiv
-    .appendChild(userDiv)
-    .appendChild(textDiv).appendChild(dateDiv);
+  if (date) {
+    dateDiv.innerHTML = date;
+  }
+
+  messageDiv.appendChild(userDiv).appendChild(textDiv).appendChild(dateDiv);
+
+  messageContainer.appendChild(messageDiv);
 }
+
+formChat.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const mensaje = inputChat.value;
+  const fecha = new Date().toLocaleDateString();
+
+  user.socket.emit("new_message", { user: user.email || 'Anónimo', mensaje, fecha });
+  inputChat.value = "";
+});

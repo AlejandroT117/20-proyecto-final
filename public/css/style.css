@@ -56,6 +56,11 @@ nav.navbar {
   left: -100%;
   background-color: rgba(173, 167, 167, 0.8);
   font-size: 14px;
+  display:none;
+}
+
+.chat .chat-container.expanded{
+  display: block;
 }
 
 .chat .title-container{
